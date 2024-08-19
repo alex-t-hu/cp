@@ -6,6 +6,7 @@ using namespace std;
 #define MAXN 100010
 int z[MAXN], p[MAXN], c[MAXN];
 
+// for each i, z[i] is the length of longest prefix starting at i that is also a prefix
 void z_function (string& s) {
     z[0] = s.size();
     int l = 0, r = 0;
@@ -20,6 +21,7 @@ void z_function (string& s) {
     }
 }
 
+// for each i, p[i] is the length of longest non-trivial suffix ending at i that is also a prefix
 void kmp (string& s) {
     p[0] = 0;
     for (int i = 1; i < s.size(); i++) {
@@ -51,8 +53,7 @@ int main () {
 
     vector<pair<int, int>> v;
     int largest_prefix_suffix = p[s.size() - 1];
-    v.push_back({largest_prefix_suffix, c[largest_prefix_suffix]});
-    for (int i = 1; i < largest_prefix_suffix; i++) {
+    for (int i = 0; i < largest_prefix_suffix; i++) {
         if (i + z[i] >= largest_prefix_suffix) {
             int l = largest_prefix_suffix - i;
             v.push_back({l, c[l]});
